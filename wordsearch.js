@@ -1,3 +1,6 @@
+//Contributors @matt-james-morgan, @philteigne, @Fatbobot
+//
+
 const reverseStr = (str) => {
     const strArr = str.split('');
     const reverseStrArr = strArr.reverse();
@@ -19,8 +22,30 @@ const transpose = (matrix) => {
     }
     return result;
   };
+
+const transposeDiagonal = (matrix) => {
+    let diagonalMatrix = matrix;
+    let frontCount = matrix[0].length - 1;
+    
+
+    for (let i of diagonalMatrix) {
+        for (let j = 0; j < frontCount; j++) {
+            i.unshift(0);
+        }
+        frontCount--;
+    }
+
+    diagonalMatrix = transpose(diagonalMatrix);
+    
+    return diagonalMatrix;
+}
   
 const wordSearch = (letters, word) => {
+
+    if(letters.length === 0) {
+        return false;
+    }
+
   const reverseWord = reverseStr(word);
   const horizontalJoin = letters.map(ls => ls.join(''));
 
@@ -35,21 +60,17 @@ const wordSearch = (letters, word) => {
     if (l.includes(word) || l.includes(reverseWord)) return true;
   }
 
+  const letters3 = transposeDiagonal(letters);
+
+  const horizontalJoin3 = letters3.map(ls => ls.join(''));
+  for (let l of horizontalJoin3) {
+    if (l.includes(word) || l.includes(reverseWord)) return true;
+  }
+
+  
   return false;
 };
 
-words = [
-    ['A', 'W', 'C', 'F', 'Q', 'U', 'A', 'L'],
-    ['S', 'E', 'I', 'N', 'F', 'E', 'L', 'D'],
-    ['Y', 'F', 'C', 'F', 'Q', 'U', 'A', 'L'],
-    ['H', 'M', 'J', 'T', 'E', 'V', 'R', 'G'],
-    ['W', 'H', 'C', 'S', 'Y', 'E', 'R', 'L'],
-    ['B', 'F', 'R', 'E', 'N', 'E', 'Y', 'B'],
-    ['U', 'B', 'T', 'W', 'A', 'P', 'A', 'I'],
-    ['O', 'D', 'C', 'A', 'K', 'U', 'A', 'S'],
-    ['E', 'Z', 'K', 'F', 'Q', 'U', 'A', 'L']
-]
 
 module.exports = wordSearch;
 
-// CONSOLE OUTPUT
